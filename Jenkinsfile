@@ -29,7 +29,8 @@ node {
                 rc = sh returnStatus: true, script: "${toolbelt} force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile ${jwt_key_file} --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
             }else{
                  rc = bat returnStatus: true, script: "\"${toolbelt}\" force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile \"${jwt_key_file}\" --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"		    
-                 def rc2 = bat (returnStdout: true, script: "git diff --name-only 0 HEAD").trim()
+                 //def rc2 = bat (returnStdout: true, script: "git diff --name-only HEAD HEAD~1").trim()
+		 def rc2 = bat (returnStdout: true, script: "git diff --name-only HEAD HEAD~5").trim()
 		 result = rc2.readLines().drop(1)
 		    def folderString
 		    for(int  i=0; i<result.size();i++){
@@ -46,29 +47,20 @@ node {
 		    	rc4 = bat returnStatus: true, script: "copy ${correctstring} C:\\deploy-cmp\\${folderString}"
 		    	rc5 = bat returnStatus: true, script: "copy ${correctstring}-meta.xml C:\\deploy-cmp\\${folderString}"			    
 		    }
-		    
-//		    println '***'
-//		    rc3 = bat returnStatus: true, script: "mkdir C:/deploy-cmp/${result}"
             }
             if (rc != 0) { error 'hub org authorization failed' }
-
 			println rc
-			
 			// need to pull out assigned username
 			if (isUnix()) {
 				rmsg = sh returnStdout: true, script: "${toolbelt} force:mdapi:deploy -d manifest/. -u ${HUB_ORG}"
 			}else{
-//			   rmsg = bat returnStdout: true, script: "\"${toolbelt}\" force:source:deploy --sourcepath ./force-app/main/default/"
-				
 			   rmsg = bat returnStdout: true, script: "\"${toolbelt}\" force:source:deploy --sourcepath C:/deploy-cmp/force-app/main/default/"
 			}
-			  
             printf rmsg
             println('Deployment is Finished Successfully three!!')
             println(rmsg)
             rc5 = bat returnStatus: true, script: "cd C:\\deploy-cmp"			    
             rc6 = bat returnStatus: true, script: "rmdir /Q /S force-app"			    
-
         }
     }
 }
