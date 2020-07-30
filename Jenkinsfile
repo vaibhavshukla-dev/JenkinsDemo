@@ -57,13 +57,14 @@ node {
 			   rmsg = bat returnStdout: true, script: "\"${toolbelt}\" force:source:deploy -u ${HUB_ORG} --sourcepath C:\\deploy-cmp\\force-app\\main\\default\\"
 			}
             printf rmsg
-		if(rmsg == 0) {
+		rmsg2 = bat returnStdout: true, script: "\"${toolbelt}\" force:data:record:create -u ${HUB_ORG} -s Deployment__c -v \"Description__c='Deployed Successfully.'\""
+		/*if(rmsg == 0) {
 			rmsg2 = bat returnStdout: true, script: "\"${toolbelt}\" force:data:record:create -u ${HUB_ORG} -s Deployment__c -v \"Description__c='Deployed Successfully.'\""
 		}else{
 			rmsg3 = bat returnStdout: true, script: "\"${toolbelt}\" force:data:record:create -u ${HUB_ORG} -s Deployment__c -v \"Description__c=${rmsg}\""
 			//rmsg3 = bat returnStdout: true, script: "\"${toolbelt}\" force:source:deploy -u ${HUB_ORG} --sourcepath C:\\deploy-cmp\\force-app\\main\\default\\"
 			
-		}
+		}*/
             println('Deployment is Finished Successfully three!!')
             println(rmsg)
             rc5 = bat returnStatus: true, script: "cd c:\\deploy-cmp & rmdir /Q/S force-app"			    
