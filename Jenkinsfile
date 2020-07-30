@@ -29,12 +29,8 @@ node {
                 rc = sh returnStatus: true, script: "${toolbelt} force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile ${jwt_key_file} --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
             }else{
                  rc = bat returnStatus: true, script: "\"${toolbelt}\" force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile \"${jwt_key_file}\" --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"		    
-                 def rc2 = bat (returnStdout: true, script: "git diff --name-only HEAD HEAD~1").trim()
-		    
-//		    println '***'
-//		    println("################ " + rc2 + " ####################")
-		    result = rc2.readLines().drop(1)
-		  //  println( result)
+                 def rc2 = bat (returnStdout: true, script: "git diff --name-only 0 HEAD").trim()
+		 result = rc2.readLines().drop(1)
 		    def folderString
 		    for(int  i=0; i<result.size();i++){
 			    folderString=''
