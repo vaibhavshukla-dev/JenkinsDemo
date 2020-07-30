@@ -57,7 +57,7 @@ node {
 			   rmsg = bat returnStdout: true, script: "\"${toolbelt}\" force:source:deploy -u ${HUB_ORG} --sourcepath C:\\deploy-cmp\\force-app\\main\\default\\"
 			}
             printf rmsg
-		 def cm = bat (returnStdout: true, script: "git log -1").trim()
+		 //def cm = bat (returnStdout: true, script: "git log -1").trim()
 		rmsg2 = bat returnStdout: true, script: "\"${toolbelt}\" force:data:record:create -u ${HUB_ORG} -s Deployment__c -v \"Description__c='Deployed Successfully. ${cm} '\""
 		/*if(rmsg == 0) {
 			rmsg2 = bat returnStdout: true, script: "\"${toolbelt}\" force:data:record:create -u ${HUB_ORG} -s Deployment__c -v \"Description__c='Deployed Successfully.'\""
