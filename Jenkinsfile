@@ -54,13 +54,13 @@ node {
 			if (isUnix()) {
 				rmsg = sh returnStdout: true, script: "${toolbelt} force:mdapi:deploy -d manifest/. -u ${HUB_ORG}"
 			}else{
-			   rmsg = bat returnStdout: true, script: "\"${toolbelt}\" force:source:deploy -u ${HUB_ORG} --sourcepath C:/deploy-cmp/force-app/main/default/"
+			   rmsg = bat returnStdout: true, script: "\"${toolbelt}\" force:source:deploy -u ${HUB_ORG} --sourcepath C:\\deploy-cmp\\force-app\\main\\default\\"
 			}
             printf rmsg
             println('Deployment is Finished Successfully three!!')
             println(rmsg)
             rc5 = bat returnStatus: true, script: "cd C:\\deploy-cmp"			    
-            rc6 = bat returnStatus: true, script: "rmdir /Q /S force-app"			    
+           // rc6 = bat returnStatus: true, script: "cd C:\\deploy-cmp rmdir /Q /S force-app"			    
         }
     }
 }
